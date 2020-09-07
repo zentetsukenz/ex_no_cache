@@ -42,6 +42,10 @@ defmodule ExNoCache.Plug.LastModified do
     conn
   end
 
+  defp compare(%Conn{} = conn, nil, _) do
+    conn
+  end
+
   defp compare(%Conn{} = conn, content_last_modified_at, [raw_req_last_modified_at | _]) do
     req_last_modified_at = parse_req_last_modified_header(raw_req_last_modified_at)
 
@@ -58,6 +62,11 @@ defmodule ExNoCache.Plug.LastModified do
         # FIXME: Not sure how to deal with this. Server downgrades the content?
         conn
     end
+  end
+
+  defp control(%Conn{} = conn, nil) do
+    conn
+    |> Conn.put_resp_header("cache-control", @control)
   end
 
   defp control(%Conn{} = conn, content_last_modified_at) do
@@ -82,8 +91,7 @@ defmodule ExNoCache.Plug.LastModified do
           {:ok, %DateTime{} = updated_at} ->
             updated_at
 
-          v ->
-            warn_result_is_not_datetime(v)
+          _ ->
             nil
         end
     end
@@ -199,16 +207,6 @@ defmodule ExNoCache.Plug.LastModified do
       "[",
       inspect(__MODULE__),
       "] is used but cannot load updated_at. The content updated at check won't work as expected!"
-    ])
-  end
-
-  defp warn_result_is_not_datetime(v) do
-    Logger.warn([
-      "[",
-      inspect(__MODULE__),
-      "] is used but updated_at is not a `%DateTime{}` but `",
-      inspect(v),
-      "`. The content updated at check won't work as expected!"
     ])
   end
 end
