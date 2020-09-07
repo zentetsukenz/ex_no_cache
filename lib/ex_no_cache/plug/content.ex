@@ -61,6 +61,7 @@ defmodule ExNoCache.Plug.Content do
   @spec init(options()) :: options()
   def init(opts) do
     opts
+    |> Keyword.put_new(:store, ExNoCache.Cache.GenServer)
   end
 
   @impl Plug
