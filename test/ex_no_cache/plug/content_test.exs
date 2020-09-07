@@ -72,7 +72,7 @@ defmodule ExNoCache.Plug.ContentTest do
   test "etags uncached GET response", %{pid: pid} do
     conn =
       uncache_conn()
-      |> ExNoCache.Plug.Content.call(ExNoCache.Plug.Content.init(@opts))
+      |> ExNoCache.Plug.Content.call(@opts)
       |> send_resp(:ok, @content)
 
     assert 200 == conn.status
@@ -85,7 +85,7 @@ defmodule ExNoCache.Plug.ContentTest do
   test "etags cached GET response", %{pid: pid} do
     conn =
       cache_conn()
-      |> ExNoCache.Plug.Content.call(ExNoCache.Plug.Content.init(@opts))
+      |> ExNoCache.Plug.Content.call(@opts)
       |> send_resp(:ok, @content)
 
     assert 304 == conn.status

@@ -29,7 +29,7 @@ defmodule ExNoCache.Plug.Content do
 
   `ExNoCache.Plug.Content` should be used as a last resort only when you cannot
   determined the last updated time of the content. Otherwise use
-  `ExNoCache.Plug.Time` should be better in terms of efficiency since
+  `ExNoCache.Plug.LastModified` should be better in terms of efficiency since
   `ExNoCache.Plug.Content` always allows the request to be processed first
   before determining the cache-control strategy.
 
