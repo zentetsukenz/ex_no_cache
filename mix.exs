@@ -12,7 +12,14 @@ defmodule ExNoCache.MixProject do
       description: "ExNoCache is a plug for serving HTTP no-cache",
       source_url: "https://github.com/zentetsukenz/ex_no_cache/",
       homepage_url: "https://github.com/zentetsukenz/ex_no_cache",
-      docs: docs()
+      docs: docs(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -26,7 +33,9 @@ defmodule ExNoCache.MixProject do
   defp deps do
     [
       {:plug, ">= 1.10.0 and < 2.0.0"},
-      {:ex_doc, "~> 0.22", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.22", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
