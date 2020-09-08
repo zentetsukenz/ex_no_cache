@@ -1,6 +1,7 @@
 # ExNoCache
 
 ![build](https://github.com/zentetsukenz/ex_no_cache/workflows/.github/workflows/build.yml/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/zentetsukenz/ex_no_cache/badge.svg?branch=master)](https://coveralls.io/github/zentetsukenz/ex_no_cache?branch=master)
 
 A simple content caching plug that relies on the [HTTP "no-cache"
 strategy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching) (Cache but
