@@ -1,5 +1,42 @@
 defmodule ExNoCache.Plug.LastModified do
   @moduledoc """
+  A plug for caching a content using last modify date.
+
+  Requires one option:
+
+    * `:updated_at` - The Module Function Argument tuple to fetch the last
+      modify date for the content. The function must return a %DateTime{}
+      struct.
+
+  ## Cache mechanisms
+
+  `ExNoCache.Plug.LastModified` uses content last modification datetime to
+  determine whether it should set the last-modified in header response or not.
+
+  It first look for the client last modify date from the `"if-modified-since"`
+  in the request headers. Then compare with the content last modify date. If the
+  datetime is equal, the `ExNoCache.Plug.LastModified` halts the plug and
+  returns the `"not modified"` immediately. Otherwise request will just go
+  normally and the `"last-modified"` is added in the response headers.
+
+  ## Usage
+
+  Add this plug to the pipeline of the endpoint you want to cache using content
+  last update time. Provide the Module Function Argument to get the last updated
+  datetime and it should just work.
+
+  Please note that the `ExNoCache.Plug.LastModified` only works with the GET
+  request.
+
+  ## Examples
+
+  This plug can be mounted in a `Plug.Builder` pipeline as follows:
+
+      def MyPlug do
+        use Plug.Builder
+
+        plug ExNoCache.Plug.LastModified, updated_at: {My, :awesome, ["function"]}
+      end
 
   """
   @moduledoc since: "0.1.0"
