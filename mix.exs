@@ -32,10 +32,11 @@ defmodule ExNoCache.MixProject do
 
   defp deps do
     [
-      {:plug, ">= 1.10.0 and < 2.0.0"},
-      {:ex_doc, "~> 0.22", only: :dev, runtime: false},
+      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:ex_doc, "~> 0.22", only: :dev, runtime: false},
+      {:excoveralls, "~> 0.10", only: :test},
+      {:plug, ">= 1.10.0 and < 2.0.0"}
     ]
   end
 
